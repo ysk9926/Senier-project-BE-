@@ -19,11 +19,37 @@ export default {
           },
         });
         if (userWhitenoise) {
-          console.log(userWhitenoise);
-          return {
-            ok: true,
-            whitenoise: userWhitenoise,
-          };
+          if (userWhitenoise.whiteNoise.requirePoints !== null) {
+            if (
+              userWhitenoise.whiteNoise.requirePoints <= loggedInUser.points
+            ) {
+              const points =
+                loggedInUser.points - userWhitenoise.whiteNoise.requirePoints;
+              await client.user.update({
+                where: {
+                  id: loggedInUser.id,
+                },
+                data: {
+                  points,
+                },
+              });
+              await client.userWhiteNoise.update({
+                where: {
+                  id: userWhitenoise.id,
+                },
+                data: {
+                  isLocked: !userWhitenoise.isLocked,
+                },
+              });
+              return {
+                ok: true,
+              };
+            }
+            return {
+              ok: false,
+              error: "잠금에 필요한 포인트가 부족합니다",
+            };
+          }
         }
         return {
           ok: false,

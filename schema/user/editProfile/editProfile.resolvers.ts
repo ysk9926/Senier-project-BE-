@@ -15,7 +15,9 @@ export default {
         let avatarURL = null;
         if (avatar) {
           avatarURL = await awsPhotoUpload(avatar, loggedInUser.id, "avatars");
-          awsPhotoDelete(loggedInUser.avatar, "avatars");
+          if (loggedInUser.avatar) {
+            awsPhotoDelete(loggedInUser.avatar, "avatars");
+          }
         }
         let uglyPassword = null;
         if (newPassword) {

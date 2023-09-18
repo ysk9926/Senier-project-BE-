@@ -5,5 +5,6 @@ export default gql`
     id: Int!
     whitenoiseName: String!
     whitenoiseURL: String!
+    requirePoints: Int
   }
 `;

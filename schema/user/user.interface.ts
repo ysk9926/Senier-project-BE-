@@ -1,4 +1,5 @@
-import { Todo } from "@prisma/client";
+import { Todo, User } from "@prisma/client";
+import { int } from "aws-sdk/clients/datapipeline";
 
 export interface IAccount {
   id: number;
@@ -22,21 +23,8 @@ export interface IOurResolver {
   info: any;
 }
 
-export interface IUser {
-  id: number;
-  username: string;
-  userId: string;
-  password: string;
-  avatar: string;
-  todos: {
-    todo: Todo;
-  };
-  createdAt: any;
-  updatedAt: any;
-}
-
 export interface IContext {
-  loggedInUser: IUser;
+  loggedInUser: User;
 }
 
 export interface IError {
