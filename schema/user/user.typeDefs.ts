@@ -7,5 +7,6 @@ export default gql`
     password: String!
     userId: String!
     todos: [Todo]
+    userWhiteNoise: [UserWhiteNoise]
   }
 `;

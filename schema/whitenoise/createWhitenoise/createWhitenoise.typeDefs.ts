@@ -5,7 +5,6 @@ export default gql`
     createWhitenoise(
       whitenoiseName: String!
       whitenoiseURL: String!
-      isLocked: Boolean!
     ): mutationResponse!
   }
 `;
