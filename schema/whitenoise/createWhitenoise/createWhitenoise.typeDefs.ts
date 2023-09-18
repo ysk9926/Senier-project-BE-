@@ -5,6 +5,7 @@ export default gql`
     createWhitenoise(
       whitenoiseName: String!
       whitenoiseURL: String!
+      requirePoints: Int
     ): mutationResponse!
   }
 `;

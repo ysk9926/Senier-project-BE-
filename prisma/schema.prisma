@@ -17,6 +17,7 @@ model User {
   userId String @unique
   avatar String? 
   todos   Todo[]
+  points Int @default(100)
   userWhiteNoises UserWhiteNoise[]
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
@@ -36,6 +37,7 @@ model WhiteNoise {
   id            Int             @id @default(autoincrement())
   whitenoiseName String         @unique
   whitenoiseURL  String
+  requirePoints Int?
   userWhiteNoises UserWhiteNoise[]
   createAt      DateTime        @default(now())
   updateAt      DateTime        @updatedAt
