@@ -23,19 +23,36 @@ export default {
           error: "이미 가입된 유저이름이나 아이디 입니다",
         };
       }
-      const uglyPasswrod = await bcrypt.hash(password, 10);
-      const allWhitenoise = await client.whiteNoise.findMany();
-      console.log(allWhitenoise);
-      await client.user.create({
+      const uglyPassword = await bcrypt.hash(password, 10);
+      const createdUser = await client.user.create({
         data: {
           username,
           userId,
-          password: uglyPasswrod,
-          whitenoises: {
-            connect: allWhitenoise.map((whitenoise) => ({ id: whitenoise.id })),
-          },
+          password: uglyPassword,
         },
       });
+
+      // 데이터베이스에 있는 모든 WhiteNoise 가져오기
+      const allWhiteNoises = await client.whiteNoise.findMany();
+
+      // 각 WhiteNoise를 해당 사용자의 UserWhiteNoise로 추가
+      for (const whiteNoise of allWhiteNoises) {
+        await client.userWhiteNoise.create({
+          data: {
+            user: {
+              connect: {
+                id: createdUser.id, // 새로 생성된 사용자의 ID를 연결
+              },
+            },
+            whiteNoise: {
+              connect: {
+                id: whiteNoise.id, // 기존 WhiteNoise의 ID를 연결
+              },
+            },
+            isLocked: false, // 원하는 기본 잠금 상태를 설정
+          },
+        });
+      }
       return {
         ok: true,
       };

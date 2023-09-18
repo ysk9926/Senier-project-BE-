@@ -17,7 +17,7 @@ model User {
   userId String @unique
   avatar String? 
   todos   Todo[]
-  whitenoises WhiteNoise[]
+  userWhiteNoises UserWhiteNoise[]
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
@@ -33,12 +33,21 @@ model Todo {
 }
 
 model WhiteNoise {
-  id Int @id @default(autoincrement())
-  whitenoiseName String @unique
-  whitenoiseURL String 
-  user User? @relation(fields: [userID], references: [id])
-  userID Int?
-  isLocked Boolean
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  id            Int             @id @default(autoincrement())
+  whitenoiseName String         @unique
+  whitenoiseURL  String
+  userWhiteNoises UserWhiteNoise[]
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
+}
+
+model UserWhiteNoise {
+  id            Int      @id @default(autoincrement())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        Int
+  whiteNoise    WhiteNoise @relation(fields: [whiteNoiseId], references: [id])
+  whiteNoiseId  Int
+  isLocked      Boolean
+  createAt      DateTime @default(now())
+  updateAt      DateTime @updatedAt
 }

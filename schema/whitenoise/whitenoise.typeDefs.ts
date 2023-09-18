@@ -5,8 +5,5 @@ export default gql`
     id: Int!
     whitenoiseName: String!
     whitenoiseURL: String!
-    user: [User]
-    isLocked: Boolean!
-    userId: Int
   }
 `;

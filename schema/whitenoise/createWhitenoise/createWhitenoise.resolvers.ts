@@ -5,7 +5,7 @@ export default {
   Mutation: {
     createWhitenoise: async (
       _: unknown,
-      { whitenoiseName, whitenoiseURL, isLocked }: WhiteNoise
+      { whitenoiseName, whitenoiseURL }: WhiteNoise
     ) => {
       const existWhitenoise = await client.whiteNoise.findUnique({
         where: { whitenoiseName },
@@ -20,7 +20,6 @@ export default {
           data: {
             whitenoiseName,
             whitenoiseURL,
-            isLocked,
           },
         });
         return {
