@@ -34,9 +34,11 @@ model Todo {
 
 model WhiteNoise {
   id Int @id @default(autoincrement())
-  whitenoiseName String
-  whitenoiseURL String
-  user User[]
+  whitenoiseName String @unique
+  whitenoiseURL String 
+  user User? @relation(fields: [userID], references: [id])
+  userID Int?
+  isLocked Boolean
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }

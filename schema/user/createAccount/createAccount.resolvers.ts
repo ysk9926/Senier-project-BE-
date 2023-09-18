@@ -24,11 +24,16 @@ export default {
         };
       }
       const uglyPasswrod = await bcrypt.hash(password, 10);
+      const allWhitenoise = await client.whiteNoise.findMany();
+      console.log(allWhitenoise);
       await client.user.create({
         data: {
           username,
           userId,
           password: uglyPasswrod,
+          whitenoises: {
+            connect: allWhitenoise.map((whitenoise) => ({ id: whitenoise.id })),
+          },
         },
       });
       return {
