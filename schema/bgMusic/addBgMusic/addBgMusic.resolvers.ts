@@ -1,25 +1,24 @@
-import { WhiteNoise } from "@prisma/client";
+import { BackgroundMusic } from "@prisma/client";
 import client from "../../../client";
 import { protectResolver } from "../../user/user.Utils";
 
 export default {
   Mutation: {
-    createWhitenoise: protectResolver(
+    addBgMusic: protectResolver(
       async (
         _: unknown,
-        { whitenoiseName, whitenoiseURL, requirePoints }: WhiteNoise,
+        { bgMusicName, bgMusicURL }: BackgroundMusic,
         { loggedInUser }
       ) => {
-        const existWhitenoise = await client.whiteNoise.findUnique({
-          where: { whitenoiseName },
+        const existBgMusic = await client.backgroundMusic.findUnique({
+          where: { bgMusicName },
         });
         if (loggedInUser.admin === true) {
-          if (!existWhitenoise) {
-            await client.whiteNoise.create({
+          if (!existBgMusic) {
+            await client.backgroundMusic.create({
               data: {
-                whitenoiseName,
-                whitenoiseURL,
-                requirePoints,
+                bgMusicName,
+                bgMusicURL,
               },
             });
             return {
@@ -28,7 +27,7 @@ export default {
           }
           return {
             ok: false,
-            error: "이미 존재하는 백색소음입니다",
+            error: "이미 존재하는 배경음악입니다",
           };
         }
         return {

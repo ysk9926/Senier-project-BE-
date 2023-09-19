@@ -3,9 +3,9 @@ import { gql } from "apollo-server-express";
 export default gql`
   type Todo {
     id: Int!
-    status: String!
+    status: Boolean!
     content: String!
-    user: User
-    userid: String!
+    userId: Int!
+    user: User!
   }
 `;
