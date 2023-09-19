@@ -4,36 +4,32 @@ import { protectResolver } from "../../user/user.Utils";
 
 export default {
   Mutation: {
-    createWhitenoise: protectResolver(
+    editWhitenoise: protectResolver(
       async (
         _: unknown,
-        { whitenoiseName, whitenoiseURL, requirePoints }: WhiteNoise,
+        { id, whitenoiseName, whitenoiseURL }: WhiteNoise,
         { loggedInUser }
       ) => {
-        const existWhitenoise = await client.whiteNoise.findUnique({
-          where: { whitenoiseName },
+        const oldWHitenoise = await client.whiteNoise.findUnique({
+          where: { id },
         });
         if (loggedInUser.admin === true) {
-          if (!existWhitenoise) {
-            await client.whiteNoise.create({
+          if (oldWHitenoise) {
+            await client.whiteNoise.update({
+              where: { id },
               data: {
                 whitenoiseName,
                 whitenoiseURL,
-                requirePoints,
               },
             });
             return {
               ok: true,
             };
           }
-          return {
-            ok: false,
-            error: "이미 존재하는 백색소음입니다",
-          };
         }
         return {
           ok: false,
-          error: "권한이 없습니다",
+          error: "수정 권한이 없습니다",
         };
       }
     ),
