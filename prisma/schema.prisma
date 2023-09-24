@@ -20,6 +20,7 @@ model User {
   points Int @default(100)
   admin  Boolean @default(false)
   userWhiteNoises UserWhiteNoise[]
+  inquiries Inquiry[]
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
@@ -61,4 +62,16 @@ model BackgroundMusic {
   bgMusicURL  String
   createAt      DateTime @default(now())
   updateAt      DateTime @updatedAt
+}
+
+model Inquiry{
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userID], references: [id])
+  userID Int
+  title String 
+  contents String
+  answer String?
+  isClosed Boolean @default(false)
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
 }
