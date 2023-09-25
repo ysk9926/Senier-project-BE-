@@ -1,5 +1,4 @@
 import client from "../../../client";
-import { protectResolver } from "../../user/user.Utils";
 
 export default {
   Query: {

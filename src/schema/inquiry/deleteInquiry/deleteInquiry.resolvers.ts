@@ -3,7 +3,7 @@ import { protectResolver } from "../../user/user.Utils";
 import client from "../../../client";
 
 export default {
-  Muataion: {
+  Mutation: {
     deleteInquiry: protectResolver(
       async (_: unknown, { id }: Inquiry, { loggedInUser }) => {
         const inquiry = await client.inquiry.findUnique({ where: { id } });
