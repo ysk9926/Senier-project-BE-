@@ -7,9 +7,9 @@
     "esModuleInterop": true,
     "module": "commonjs", // "CommonJS"에서 "commonjs"로 수정
     "target": "es5",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
-      "@prisma/client": ["node_modules/@prisma/client"]
+      "@prisma/client": ["../prisma/client"]
       // 다른 경로들도 필요한 경우 추가해주세요.
     }
   },
