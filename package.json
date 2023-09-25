@@ -6,7 +6,10 @@
   "scripts": {
     "migrate": "npx prisma migrate dev",
     "dev": "nodemon --exec ts-node server.ts",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "prebuild": "npx prisma migrate dev && npx prisma migrate deploy",
+    "build": "npx tsc",
+    "start": "node /app/dist/server.js"
   },
   "keywords": [],
   "author": "",
