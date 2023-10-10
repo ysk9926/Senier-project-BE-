@@ -56,7 +56,17 @@ const startServer = async (): Promise<void> => {
         loggedInUser: await getUser(req.headers.token as string),
       };
     },
-    plugins: [],
+    plugins: [
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              subscriptionServer.close();
+            },
+          };
+        },
+      },
+    ],
   });
   await apolloserver.start();
   apolloserver.applyMiddleware({ app });
