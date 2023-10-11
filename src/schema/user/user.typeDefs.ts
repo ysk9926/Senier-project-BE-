@@ -7,6 +7,8 @@ export default gql`
     password: String!
     userId: String!
     points: Int!
+    avatar: String
+    admin: Boolean!
     todos: [Todo]
     userWhiteNoise: [UserWhiteNoise]
   }
