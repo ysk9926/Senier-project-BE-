@@ -9,11 +9,12 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-export const awsPhotoUpload = async (
+export const awsUpload = async (
   file: any,
   userId: number,
   foldername: string
 ) => {
+  console.log(file);
   const {
     file: { filename, createReadStream },
   } = await file;
@@ -31,7 +32,7 @@ export const awsPhotoUpload = async (
   return Location;
 };
 
-export const awsPhotoDelete = async (fileUrl: string, foldername: string) => {
+export const awsDelete = async (fileUrl: string, foldername: string) => {
   const decodedUrl = decodeURI(fileUrl);
   const filePath = decodedUrl.split(`/${foldername}/`)[1];
   const fileName = `${foldername}/${filePath}`;

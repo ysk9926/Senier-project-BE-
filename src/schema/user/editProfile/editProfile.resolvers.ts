@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { protectResolver } from "../user.Utils";
-import { awsPhotoDelete, awsPhotoUpload } from "../../shared/shared.utils";
+import { awsDelete, awsUpload } from "../../shared/shared.utils";
 import bcrypt from "bcrypt";
 import client from "../../../client";
 
@@ -14,9 +14,9 @@ export default {
       ) => {
         let avatarURL = null;
         if (avatar) {
-          avatarURL = await awsPhotoUpload(avatar, loggedInUser.id, "avatars");
+          avatarURL = await awsUpload(avatar, loggedInUser.id, "avatars");
           if (loggedInUser.avatar) {
-            awsPhotoDelete(loggedInUser.avatar, "avatars");
+            awsDelete(loggedInUser.avatar, "avatars");
           }
         }
         let uglyPassword = null;

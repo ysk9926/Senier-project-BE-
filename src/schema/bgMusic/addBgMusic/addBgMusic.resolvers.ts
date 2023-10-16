@@ -1,6 +1,7 @@
 import { BackgroundMusic } from "@prisma/client";
 import client from "../../../client";
 import { protectResolver } from "../../user/user.Utils";
+import { awsUpload } from "../../shared/shared.utils";
 
 export default {
   Mutation: {
@@ -15,10 +16,16 @@ export default {
         });
         if (loggedInUser.admin === true) {
           if (!existBgMusic) {
+            let bgMusicUrl = null;
+            bgMusicUrl = await awsUpload(
+              bgMusicURL,
+              loggedInUser.id,
+              "bgMusic"
+            );
             await client.backgroundMusic.create({
               data: {
                 bgMusicName,
-                bgMusicURL,
+                bgMusicURL: bgMusicUrl,
               },
             });
             return {
