@@ -8,7 +8,7 @@ export default {
     editWhitenoise: protectResolver(
       async (
         _: unknown,
-        { id, whitenoiseName, whitenoiseURL }: WhiteNoise,
+        { id, whitenoiseName, whitenoiseURL, requirePoints }: WhiteNoise,
         { loggedInUser }
       ) => {
         const oldWHitenoise = await client.whiteNoise.findUnique({
@@ -32,6 +32,7 @@ export default {
               data: {
                 whitenoiseName,
                 ...(whitenoiseURL && { whitenoiseURL: whitenoiseUrl }),
+                requirePoints,
               },
             });
             return {

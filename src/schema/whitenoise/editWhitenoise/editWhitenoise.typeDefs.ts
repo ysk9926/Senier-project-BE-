@@ -7,6 +7,7 @@ export default gql`
       id: Int!
       whitenoiseName: String
       whitenoiseURL: Upload
+      requirePoints: Int
     ): mutationResponse!
   }
 `;
