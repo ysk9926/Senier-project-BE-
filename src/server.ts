@@ -51,12 +51,24 @@ const startServer = async (): Promise<void> => {
   const apolloserver = new ApolloServer({
     typeDefs,
     resolvers,
+    introspection: true,
     context: async ({ req }) => {
       return {
         loggedInUser: await getUser(req.headers.token as string),
       };
     },
-    plugins: [],
+    plugins: [
+      ApolloServerPluginLandingPageGraphQLPlayground,
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              subscriptionServer.close();
+            },
+          };
+        },
+      },
+    ],
   });
   await apolloserver.start();
   apolloserver.applyMiddleware({ app });
