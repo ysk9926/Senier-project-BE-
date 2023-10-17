@@ -1,6 +1,7 @@
 import { WhiteNoise } from "@prisma/client";
 import client from "../../../client";
 import { protectResolver } from "../../user/user.Utils";
+import { awsDelete, awsUpload } from "../../shared/shared.utils";
 
 export default {
   Mutation: {
@@ -15,11 +16,22 @@ export default {
         });
         if (loggedInUser.admin === true) {
           if (oldWHitenoise) {
+            let whitenoiseUrl = "";
+            if (whitenoiseURL) {
+              whitenoiseUrl = await awsUpload(
+                whitenoiseURL,
+                loggedInUser.id,
+                "whitenoise"
+              );
+              if (oldWHitenoise.whitenoiseURL) {
+                awsDelete(oldWHitenoise.whitenoiseURL, "whitenoise");
+              }
+            }
             await client.whiteNoise.update({
               where: { id },
               data: {
                 whitenoiseName,
-                whitenoiseURL,
+                ...(whitenoiseURL && { whitenoiseURL: whitenoiseUrl }),
               },
             });
             return {
