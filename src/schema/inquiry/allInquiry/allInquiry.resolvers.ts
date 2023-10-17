@@ -7,6 +7,9 @@ export default {
         include: {
           user: true,
         },
+        orderBy: {
+          createAt: "desc",
+        },
       });
       return a;
     },
