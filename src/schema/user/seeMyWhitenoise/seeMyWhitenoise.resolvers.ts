@@ -9,6 +9,9 @@ export default {
           where: {
             userId: loggedInUser.id,
           },
+          include: {
+            whiteNoise: true,
+          },
         });
         return ownWhitenoise;
       }

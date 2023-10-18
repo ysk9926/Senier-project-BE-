@@ -7,6 +7,9 @@ export default {
     deleteWhitenoise: protectResolver(
       async (_: unknown, { id }: WhiteNoise, { loggedInUser }) => {
         if (loggedInUser.admin === true) {
+          await client.userWhiteNoise.deleteMany({
+            where: { whiteNoiseId: id },
+          });
           await client.whiteNoise.delete({ where: { id } });
           return {
             ok: true,

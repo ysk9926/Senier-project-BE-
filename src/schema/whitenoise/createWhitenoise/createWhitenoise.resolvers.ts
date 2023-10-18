@@ -24,15 +24,19 @@ export default {
                 "whitenoise"
               );
             }
-            await client.whiteNoise.create({
+            const createdWhitenoise = await client.whiteNoise.create({
               data: {
                 whitenoiseName,
                 whitenoiseURL: whitenoiseUrl,
                 requirePoints,
               },
+              select: {
+                id: true, // 생성된 백색소음의 ID만 선택
+              },
             });
             return {
               ok: true,
+              id: createdWhitenoise.id,
             };
           }
           return {
