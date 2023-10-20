@@ -9,7 +9,7 @@ export default {
     editProfile: protectResolver(
       async (
         _: unknown,
-        { username, password: newPassword, avatar }: User,
+        { userId, username, password: newPassword, avatar }: User,
         { loggedInUser }
       ) => {
         let avatarURL = null;
@@ -29,6 +29,7 @@ export default {
             id: loggedInUser.id,
           },
           data: {
+            userId,
             username,
             ...(uglyPassword && { password: uglyPassword }),
             ...(avatar && { avatar: avatarURL }),
