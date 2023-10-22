@@ -39,6 +39,7 @@ model WhiteNoise {
   id            Int             @id @default(autoincrement())
   whitenoiseName String         @unique
   whitenoiseURL  String
+  backgroundImgURL String
   requirePoints Int?
   userWhiteNoises UserWhiteNoise[]
   createAt      DateTime        @default(now())

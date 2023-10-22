@@ -11,6 +11,7 @@ export default gql`
     createWhitenoise(
       whitenoiseName: String!
       whitenoiseURL: Upload
+      backgroundImgURL: Upload
       requirePoints: Int
     ): createWhitenoiseResponse!
   }

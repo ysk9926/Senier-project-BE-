@@ -8,7 +8,13 @@ export default {
     editWhitenoise: protectResolver(
       async (
         _: unknown,
-        { id, whitenoiseName, whitenoiseURL, requirePoints }: WhiteNoise,
+        {
+          id,
+          whitenoiseName,
+          whitenoiseURL,
+          requirePoints,
+          backgroundImgURL,
+        }: WhiteNoise,
         { loggedInUser }
       ) => {
         const oldWHitenoise = await client.whiteNoise.findUnique({
@@ -27,11 +33,22 @@ export default {
                 awsDelete(oldWHitenoise.whitenoiseURL, "whitenoise");
               }
             }
+            let backgroundImgUrl = "";
+            if (backgroundImgURL) {
+              backgroundImgUrl = await awsUpload(
+                backgroundImgURL,
+                loggedInUser.id,
+                "whitenoiseBG"
+              );
+              if (oldWHitenoise.backgroundImgURL)
+                [awsDelete(oldWHitenoise.backgroundImgURL, "whitenoiseBG")];
+            }
             await client.whiteNoise.update({
               where: { id },
               data: {
                 whitenoiseName,
                 ...(whitenoiseURL && { whitenoiseURL: whitenoiseUrl }),
+                ...(backgroundImgURL && { backgroundImgURL: backgroundImgUrl }),
                 requirePoints,
               },
             });

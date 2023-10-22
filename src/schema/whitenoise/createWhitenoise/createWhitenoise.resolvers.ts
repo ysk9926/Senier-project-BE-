@@ -8,7 +8,12 @@ export default {
     createWhitenoise: protectResolver(
       async (
         _: unknown,
-        { whitenoiseName, whitenoiseURL, requirePoints }: WhiteNoise,
+        {
+          whitenoiseName,
+          whitenoiseURL,
+          requirePoints,
+          backgroundImgURL,
+        }: WhiteNoise,
         { loggedInUser }
       ) => {
         const existWhitenoise = await client.whiteNoise.findUnique({
@@ -24,10 +29,19 @@ export default {
                 "whitenoise"
               );
             }
+            let backgroundImgUrl = "";
+            if (backgroundImgURL) {
+              backgroundImgUrl = await awsUpload(
+                backgroundImgURL,
+                loggedInUser.id,
+                "whitenoiseBG"
+              );
+            }
             const createdWhitenoise = await client.whiteNoise.create({
               data: {
                 whitenoiseName,
                 whitenoiseURL: whitenoiseUrl,
+                backgroundImgURL: backgroundImgUrl,
                 requirePoints,
               },
               select: {
