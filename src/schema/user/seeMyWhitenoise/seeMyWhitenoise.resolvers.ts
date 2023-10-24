@@ -12,6 +12,11 @@ export default {
           include: {
             whiteNoise: true,
           },
+          orderBy: {
+            whiteNoise: {
+              id: "asc",
+            },
+          },
         });
         return ownWhitenoise;
       }

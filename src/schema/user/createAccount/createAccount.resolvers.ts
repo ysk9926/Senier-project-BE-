@@ -37,21 +37,39 @@ export default {
 
       // 각 WhiteNoise를 해당 사용자의 UserWhiteNoise로 추가
       for (const whiteNoise of allWhiteNoises) {
-        await client.userWhiteNoise.create({
-          data: {
-            user: {
-              connect: {
-                id: createdUser.id, // 새로 생성된 사용자의 ID를 연결
+        if (whiteNoise.id === 1 || whiteNoise.id === 2 || whiteNoise.id === 3) {
+          await client.userWhiteNoise.create({
+            data: {
+              user: {
+                connect: {
+                  id: createdUser.id, // 새로 생성된 사용자의 ID를 연결
+                },
               },
-            },
-            whiteNoise: {
-              connect: {
-                id: whiteNoise.id, // 기존 WhiteNoise의 ID를 연결
+              whiteNoise: {
+                connect: {
+                  id: whiteNoise.id, // 기존 WhiteNoise의 ID를 연결
+                },
               },
+              isLocked: false, // 기본 백색소음은 잠금이 풀린상태
             },
-            isLocked: false, // 원하는 기본 잠금 상태를 설정
-          },
-        });
+          });
+        } else {
+          await client.userWhiteNoise.create({
+            data: {
+              user: {
+                connect: {
+                  id: createdUser.id, // 새로 생성된 사용자의 ID를 연결
+                },
+              },
+              whiteNoise: {
+                connect: {
+                  id: whiteNoise.id, // 기존 WhiteNoise의 ID를 연결
+                },
+              },
+              isLocked: true, // 나머지 백색소음은 잠금상태
+            },
+          });
+        }
       }
       return {
         ok: true,

@@ -13,9 +13,16 @@ export default {
               id,
             },
             data: {
-              status: !targetTodo.status,
+              status: true,
             },
           });
+          await client.user.update({
+            where: { id: loggedInUser.id },
+            data: {
+              points: loggedInUser.points + 5,
+            },
+          });
+
           return {
             ok: true,
           };
