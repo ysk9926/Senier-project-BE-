@@ -11,6 +11,9 @@ export default {
         await client.todo.deleteMany({
           where: { userId: loggedInUser.id },
         });
+        await client.inquiry.deleteMany({
+          where: { userID: loggedInUser.id },
+        });
         await client.user.delete({ where: { id: loggedInUser.id } });
         return {
           ok: true,
