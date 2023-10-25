@@ -8,6 +8,9 @@ export default {
         await client.userWhiteNoise.deleteMany({
           where: { userId: loggedInUser.id },
         });
+        await client.todo.deleteMany({
+          where: { userId: loggedInUser.id },
+        });
         await client.user.delete({ where: { id: loggedInUser.id } });
         return {
           ok: true,
