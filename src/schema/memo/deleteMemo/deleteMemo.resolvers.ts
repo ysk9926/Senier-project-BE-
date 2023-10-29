@@ -1,6 +1,6 @@
 import { Memo } from "@prisma/client";
-import client from "src/client";
-import { protectResolver } from "src/schema/user/user.Utils";
+import { protectResolver } from "../../user/user.Utils";
+import client from "../../../client";
 
 export default {
   Mutation: {
