@@ -7,6 +7,9 @@ export default {
       async (_: unknown, __: unknown, { loggedInUser }) => {
         const todos = await client.todo.findMany({
           where: { userId: loggedInUser.id },
+          orderBy: {
+            createAt: "asc",
+          },
         });
         return todos;
       }
